@@ -46,4 +46,6 @@ npm run migrate create "insert table categories"
 npm run migrate create "insert table locations"
 npm run migrate create "insert table achievements"
 
+npm run migrate create "create table schedules"
+
 npm run migrate up
