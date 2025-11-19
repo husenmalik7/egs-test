@@ -19,14 +19,30 @@ class SchedulesService {
     return result.rows;
   }
 
-  async addSchedule({ name, year }) {
-    const id = `schedule-${nanoid(16)}`;
-    const createdAt = new Date().toISOString();
-    const updatedAt = createdAt;
-
+  async addSchedule({
+    class_code,
+    class_name,
+    subject_code,
+    teacher_nik,
+    teacher_name,
+    date,
+    jam_ke,
+    time_start,
+    time_end,
+  }) {
     const query = {
-      text: 'INSERT INTO schedules(id, name, year, created_at, updated_at) VALUES($1, $2, $3, $4, $5) RETURNING id',
-      values: [id, name, year, createdAt, updatedAt],
+      text: 'INSERT INTO schedules(class_code, class_name, subject_code, teacher_nik, teacher_name, date, jam_ke, time_start, time_end) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id',
+      values: [
+        class_code,
+        class_name,
+        subject_code,
+        teacher_nik,
+        teacher_name,
+        date,
+        jam_ke,
+        time_start,
+        time_end,
+      ],
     };
 
     const result = await this._pool.query(query).catch((error) => {

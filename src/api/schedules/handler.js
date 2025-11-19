@@ -16,9 +16,29 @@ class SchedulesHandler {
 
   postScheduleHandler = async (request, h) => {
     this._validator.validateSchedulePayload(request.payload);
-    const { name, year } = request.payload;
+    const {
+      class_code,
+      class_name,
+      subject_code,
+      teacher_nik,
+      teacher_name,
+      date,
+      jam_ke,
+      time_start,
+      time_end,
+    } = request.payload;
 
-    const scheduleId = await this._service.addSchedule({ name, year });
+    const scheduleId = await this._service.addSchedule({
+      class_code,
+      class_name,
+      subject_code,
+      teacher_nik,
+      teacher_name,
+      date,
+      jam_ke,
+      time_start,
+      time_end,
+    });
 
     const response = h.response({
       status: 'success',
