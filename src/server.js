@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 // prettier-ignore
-const { Hapi, Jwt, Inert, path, HttpError, TokenManager, albums, AlbumsService, AlbumsValidator, categories, CategoriesService, locations, LocationsService, losts, LostsService, LostsValidator, lostComments, LostCommentsValidator, founds, FoundsService, FoundsValidator, foundComments, FoundCommentsValidator, users, UsersService, UsersValidator, authentications, AuthenticationsService, AuthenticationsValidator, uploads, StorageService, UploadsValidator, PointService, AchievementService, schedules, SchedulesService, SchedulesValidator, } = require('./import');
+const { Hapi, Jwt, Inert, path, HttpError, TokenManager, albums, AlbumsService, AlbumsValidator, categories, CategoriesService, locations, LocationsService, losts, LostsService, LostsValidator, lostComments, LostCommentsValidator, founds, FoundsService, FoundsValidator, foundComments, FoundCommentsValidator, users, UsersService, UsersValidator, authentications, AuthenticationsService, AuthenticationsValidator, uploads, StorageService, UploadsValidator, PointService, AchievementService, schedules, SchedulesService, SchedulesValidator,Boom } = require('./import');
 
 const init = async () => {
   const albumsService = new AlbumsService();
@@ -18,6 +18,18 @@ const init = async () => {
   const usersService = new UsersService();
   const authenticationsService = new AuthenticationsService();
   const storageService = new StorageService(path.resolve(__dirname, 'api/uploads/file/images'));
+
+  const apiKeyScheme = (server, options) => {
+    return {
+      authenticate: (request, h) => {
+        const apiKey = request.headers['x-api-key'];
+        if (!apiKey || apiKey !== options.apiKey) {
+          throw Boom.unauthorized('Invalid API Key');
+        }
+        return h.authenticated({ credentials: { apiKey } });
+      },
+    };
+  };
 
   const server = Hapi.server({
     port: process.env.PORT,
@@ -38,21 +50,26 @@ const init = async () => {
     },
   ]);
 
-  server.auth.strategy('ketemukan_jwt', 'jwt', {
-    keys: process.env.ACCESS_TOKEN_KEY,
-    verify: {
-      aud: false,
-      iss: false,
-      sub: false,
-      maxAgeSec: process.env.ACCESS_TOKEN_AGE,
-    },
-    validate: (artifacts) => ({
-      isValid: true,
-      credentials: {
-        id: artifacts.decoded.payload.id,
-      },
-    }),
+  server.auth.scheme('api-key', apiKeyScheme);
+  server.auth.strategy('api_key_auth', 'api-key', {
+    apiKey: 'SECRET123',
   });
+
+  // server.auth.strategy('ketemukan_jwt', 'jwt', {
+  //   keys: process.env.ACCESS_TOKEN_KEY,
+  //   verify: {
+  //     aud: false,
+  //     iss: false,
+  //     sub: false,
+  //     maxAgeSec: process.env.ACCESS_TOKEN_AGE,
+  //   },
+  //   validate: (artifacts) => ({
+  //     isValid: true,
+  //     credentials: {
+  //       id: artifacts.decoded.payload.id,
+  //     },
+  //   }),
+  // });
 
   await server.register([
     {

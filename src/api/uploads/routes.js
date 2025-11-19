@@ -6,15 +6,6 @@ const routes = (handler) => [
     method: 'POST',
     path: '/users/picture',
     handler: handler.postUploadUserPictureHandler,
-    options: {
-      payload: {
-        allow: 'multipart/form-data',
-        multipart: true,
-        output: 'stream',
-        maxBytes: 512000,
-      },
-      auth: 'ketemukan_jwt',
-    },
   },
   {
     method: 'GET',
@@ -31,15 +22,6 @@ const routes = (handler) => [
     method: 'POST',
     path: '/losts/{id}/picture',
     handler: handler.postUploadLostPictureHandler,
-    options: {
-      payload: {
-        allow: 'multipart/form-data',
-        multipart: true,
-        output: 'stream',
-        maxBytes: 512000,
-      },
-      auth: 'ketemukan_jwt',
-    },
   },
   {
     method: 'GET',
@@ -56,15 +38,6 @@ const routes = (handler) => [
     method: 'POST',
     path: '/founds/{id}/picture',
     handler: handler.postUploadFoundPictureHandler,
-    options: {
-      payload: {
-        allow: 'multipart/form-data',
-        multipart: true,
-        output: 'stream',
-        maxBytes: 512000,
-      },
-      auth: 'ketemukan_jwt',
-    },
   },
   {
     method: 'GET',

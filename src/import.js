@@ -2,6 +2,7 @@ const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
 const Inert = require('@hapi/inert');
 const path = require('path');
+const Boom = require('@hapi/boom');
 
 const HttpError = require('./exceptions/HttpError');
 const TokenManager = require('./tokenize/TokenManager');
@@ -67,6 +68,7 @@ module.exports = {
   path,
   HttpError,
   TokenManager,
+  Boom,
 
   albums,
   AlbumsService,

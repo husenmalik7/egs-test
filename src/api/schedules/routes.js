@@ -8,6 +8,9 @@ const routes = (handler) => [
     method: 'POST',
     path: '/api/schedules',
     handler: handler.postScheduleHandler,
+    options: {
+      auth: 'api_key_auth',
+    },
   },
 ];
 
