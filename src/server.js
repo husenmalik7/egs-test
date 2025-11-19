@@ -5,6 +5,7 @@ const { Hapi, Jwt, Inert, path, HttpError, TokenManager, albums, AlbumsService, 
 
 const init = async () => {
   const albumsService = new AlbumsService();
+  const schedulesService = new SchedulesService();
   const categoriesService = new CategoriesService();
   const locationsService = new LocationsService();
 
@@ -59,6 +60,13 @@ const init = async () => {
       options: {
         service: albumsService,
         validator: AlbumsValidator,
+      },
+    },
+    {
+      plugin: schedules,
+      options: {
+        service: schedulesService,
+        validator: SchedulesValidator,
       },
     },
     {
