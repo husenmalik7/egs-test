@@ -6,6 +6,11 @@ const path = require('path');
 const HttpError = require('./exceptions/HttpError');
 const TokenManager = require('./tokenize/TokenManager');
 
+//
+const schedules = require('./api/schedules');
+const SchedulesService = require('./services/postgres/SchedulesService');
+const SchedulesValidator = require('./validator/schedules');
+
 // albums
 const albums = require('./api/albums');
 const AlbumsService = require('./services/postgres/AlbumsService');
