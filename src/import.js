@@ -67,9 +67,15 @@ module.exports = {
   path,
   HttpError,
   TokenManager,
+
   albums,
   AlbumsService,
   AlbumsValidator,
+
+  schedules,
+  SchedulesService,
+  SchedulesValidator,
+
   categories,
   CategoriesService,
   locations,
