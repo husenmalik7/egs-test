@@ -15,11 +15,18 @@ const routes = (handler) => [
       auth: 'api_key_auth',
     },
   },
-
   {
     method: 'DELETE',
     path: '/api/schedules/{id}',
     handler: handler.deleteScheduleByIdHandler,
+    options: {
+      auth: 'api_key_auth',
+    },
+  },
+  {
+    method: 'PUT',
+    path: '/api/schedules/{id}',
+    handler: handler.putScheduleHandler,
     options: {
       auth: 'api_key_auth',
     },

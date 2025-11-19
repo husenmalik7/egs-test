@@ -55,22 +55,6 @@ const init = async () => {
     apiKey: 'SECRET123',
   });
 
-  // server.auth.strategy('ketemukan_jwt', 'jwt', {
-  //   keys: process.env.ACCESS_TOKEN_KEY,
-  //   verify: {
-  //     aud: false,
-  //     iss: false,
-  //     sub: false,
-  //     maxAgeSec: process.env.ACCESS_TOKEN_AGE,
-  //   },
-  //   validate: (artifacts) => ({
-  //     isValid: true,
-  //     credentials: {
-  //       id: artifacts.decoded.payload.id,
-  //     },
-  //   }),
-  // });
-
   await server.register([
     {
       plugin: albums,

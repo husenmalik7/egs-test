@@ -54,14 +54,26 @@ class SchedulesHandler {
   deleteScheduleByIdHandler = async (request) => {
     const { id } = request.params;
 
-    console.log('----', id);
-
     await this._service.deleteScheduleById(id);
 
     return {
       status: 'success',
       message: 'Schedule berhasil dihapus',
     };
+  };
+
+  putScheduleHandler = async (request, h) => {
+    this._validator.validateSchedulePayload(request.payload);
+
+    const { id } = request.params;
+    await this._service.putSchedule(id, request.payload);
+
+    const response = h.response({
+      status: 'success',
+      message: 'Schedule item berhasil diperbarui',
+    });
+    response.code(201);
+    return response;
   };
 }
 

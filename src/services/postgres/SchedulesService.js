@@ -75,6 +75,58 @@ class SchedulesService {
       throw new NotFoundError('Schedule gagal dihapus. Id tidak ditemukan');
     }
   }
+
+  async putSchedule(
+    id,
+    {
+      class_code,
+      class_name,
+      subject_code,
+      teacher_nik,
+      teacher_name,
+      date,
+      jam_ke,
+      time_start,
+      time_end,
+    }
+  ) {
+    const query = {
+      text: `UPDATE schedules
+              SET 
+                class_code = $1,
+                class_name = $2,
+                subject_code = $3,
+                teacher_nik = $4,
+                teacher_name = $5,
+                date = $6,
+                jam_ke = $7,
+                time_start = $8,
+                time_end = $9
+              WHERE id = $10 
+              RETURNING id;`,
+      values: [
+        class_code,
+        class_name,
+        subject_code,
+        teacher_nik,
+        teacher_name,
+        date,
+        jam_ke,
+        time_start,
+        time_end,
+        id,
+      ],
+    };
+
+    const result = await this._pool.query(query).catch((error) => {
+      console.error(error);
+      throw new ServerError('Internal server error');
+    });
+
+    if (!result.rowCount) {
+      throw new InvariantError('Schedule gagal diubah');
+    }
+  }
 }
 
 module.exports = SchedulesService;
