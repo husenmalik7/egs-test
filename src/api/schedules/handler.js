@@ -1,3 +1,5 @@
+const { formatStudentSchedules } = require('../../utils');
+
 class SchedulesHandler {
   constructor(service, validator) {
     this._service = service;
@@ -18,12 +20,9 @@ class SchedulesHandler {
     const { class_code = '', date = '' } = request.query;
 
     const schedules = await this._service.getStudentSchedules(class_code, date);
-    return {
-      status: 'success',
-      data: {
-        schedules,
-      },
-    };
+    const studentSchedules = formatStudentSchedules(schedules);
+
+    return studentSchedules;
   };
 
   postScheduleHandler = async (request, h) => {
