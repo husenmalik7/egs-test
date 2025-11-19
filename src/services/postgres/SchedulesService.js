@@ -3,6 +3,7 @@ const { nanoid } = require('nanoid');
 
 const InvariantError = require('../../exceptions/InvariantError');
 const ServerError = require('../../exceptions/ServerError');
+const NotFoundError = require('../../exceptions/NotFoundError');
 
 class SchedulesService {
   constructor(cacheService) {
@@ -57,6 +58,22 @@ class SchedulesService {
     }
 
     return resultId;
+  }
+
+  async deleteScheduleById(id) {
+    const query = {
+      text: 'DELETE FROM schedules WHERE id = $1 RETURNING id',
+      values: [id],
+    };
+
+    const result = await this._pool.query(query).catch((error) => {
+      console.error(error);
+      throw new ServerError('Internal server error');
+    });
+
+    if (!result.rows.length) {
+      throw new NotFoundError('Schedule gagal dihapus. Id tidak ditemukan');
+    }
   }
 }
 

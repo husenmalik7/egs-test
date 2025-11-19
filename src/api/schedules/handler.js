@@ -50,6 +50,19 @@ class SchedulesHandler {
     response.code(201);
     return response;
   };
+
+  deleteScheduleByIdHandler = async (request) => {
+    const { id } = request.params;
+
+    console.log('----', id);
+
+    await this._service.deleteScheduleById(id);
+
+    return {
+      status: 'success',
+      message: 'Schedule berhasil dihapus',
+    };
+  };
 }
 
 module.exports = SchedulesHandler;
