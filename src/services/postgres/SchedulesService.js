@@ -20,6 +20,31 @@ class SchedulesService {
     return result.rows;
   }
 
+  async getStudentSchedules(class_code, date) {
+    const query = {
+      text: `SELECT 
+                class_name,
+                date,
+                jam_ke,
+                subject_code,
+                teacher_name,
+                time_start,
+                time_end
+              FROM schedules
+              WHERE ($1 = '' OR class_code = $1)
+              AND   ($2 = '' OR date = $2::date)
+              `,
+      values: [class_code, date],
+    };
+
+    const result = await this._pool.query(query).catch((error) => {
+      console.error(error);
+      throw new ServerError('Internal server error');
+    });
+
+    return result.rows;
+  }
+
   async addSchedule({
     class_code,
     class_name,

@@ -14,6 +14,18 @@ class SchedulesHandler {
     };
   };
 
+  getStudentSchedulesHandler = async (request) => {
+    const { class_code = '', date = '' } = request.query;
+
+    const schedules = await this._service.getStudentSchedules(class_code, date);
+    return {
+      status: 'success',
+      data: {
+        schedules,
+      },
+    };
+  };
+
   postScheduleHandler = async (request, h) => {
     this._validator.validateSchedulePayload(request.payload);
     const {
