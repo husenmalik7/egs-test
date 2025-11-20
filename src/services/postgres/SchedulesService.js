@@ -71,6 +71,24 @@ class SchedulesService {
     return result.rows;
   }
 
+  async getReport(start_date, end_date) {
+    const query = {
+      text: `SELECT *
+              FROM schedules
+              WHERE ($1::date IS NULL OR date >= $1::date)
+              AND ($2::date IS NULL OR date <= $2::date)
+              `,
+      values: [start_date, end_date],
+    };
+
+    const result = await this._pool.query(query).catch((error) => {
+      console.error(error);
+      throw new ServerError('Internal server error');
+    });
+
+    return result.rows;
+  }
+
   async addSchedule({
     class_code,
     class_name,

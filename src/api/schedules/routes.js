@@ -23,6 +23,14 @@ const routes = (handler) => [
       auth: 'api_key_auth',
     },
   },
+  {
+    method: 'GET',
+    path: '/api/schedules/report/rekap-jp',
+    handler: handler.getReportHandler,
+    options: {
+      auth: 'api_key_auth',
+    },
+  },
 
   {
     method: 'POST',
