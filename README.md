@@ -8,6 +8,7 @@
 - [📁 Struktur Folder](#-struktur-folder)
 - [🛠️ Instalasi \& Konfigurasi](#️-instalasi--konfigurasi)
 - [🔐 ENV](#-env)
+- [🔐 Railway](#-railway)
 
 ---
 
@@ -111,3 +112,9 @@ CLOUDINARY_API_SECRET=
 ```
 
 </details>
+
+## 🔐 Railway
+
+Untuk deployment berhubung saya masih menggunakan free tier, jadi terkendala dalam melakukan deploy. Saya telah sengaja membuat akun baru untuk mendapatkan free trial, namun per-November 2025 railway hanya menyediakan free deploy untuk database saja dengan batas waktu 30 hari (per-Juni masih bisa untuk deploy code)
+
+![railway](./assets/ss_railway.png)
