@@ -1,4 +1,4 @@
-const { formatStudentSchedules } = require('../../utils');
+const { formatStudentSchedules, formatTeacherSchedules } = require('../../utils');
 
 class SchedulesHandler {
   constructor(service, validator) {
@@ -23,6 +23,15 @@ class SchedulesHandler {
     const studentSchedules = formatStudentSchedules(schedules);
 
     return studentSchedules;
+  };
+
+  getTeacherSchedulesHandler = async (request) => {
+    const { teacher_nik = null, start_date = null, end_date = null } = request.query;
+
+    const schedules = await this._service.getTeacherSchedules(teacher_nik, start_date, end_date);
+    const teacherSchedules = formatTeacherSchedules(schedules, start_date, end_date);
+
+    return teacherSchedules;
   };
 
   postScheduleHandler = async (request, h) => {

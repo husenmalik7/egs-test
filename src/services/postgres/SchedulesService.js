@@ -45,6 +45,32 @@ class SchedulesService {
     return result.rows;
   }
 
+  async getTeacherSchedules(teacher_nik, start_date, end_date) {
+    const query = {
+      text: `SELECT 
+                teacher_name,
+                date,
+                class_name,
+                subject_code,
+                jam_ke,
+                time_start,
+                time_end
+              FROM schedules
+              WHERE teacher_nik = $1
+              AND ($2::date IS NULL OR date >= $2::date)
+              AND ($3::date IS NULL OR date <= $3::date)
+              `,
+      values: [teacher_nik, start_date, end_date],
+    };
+
+    const result = await this._pool.query(query).catch((error) => {
+      console.error(error);
+      throw new ServerError('Internal server error');
+    });
+
+    return result.rows;
+  }
+
   async addSchedule({
     class_code,
     class_name,
